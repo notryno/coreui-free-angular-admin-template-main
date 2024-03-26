@@ -1,0 +1,36 @@
+<h2 mat-dialog-title>Add Task</h2>
+<div mat-dialog-content class="form-container">
+  <mat-form-field>
+    <input matInput placeholder="Summary" [(ngModel)]="task.summary">
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput placeholder="Description" [(ngModel)]="task.description"></textarea>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Assignee</mat-label>
+    <mat-select [(ngModel)]="task.assigneeId">
+      <mat-option *ngFor="let user of users" [value]="user">{{ user.firstName }} {{ user.lastName }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Reporter</mat-label>
+    <mat-select [(ngModel)]="task.reporterId">
+      <mat-option *ngFor="let user of users" [value]="user">{{ user.firstName }} {{ user.lastName }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Status</mat-label>
+    <mat-select [(ngModel)]="task.statusId">
+      <mat-option *ngFor="let status of statuses" [value]="status">{{ status.status }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Due Date" [matDatepicker]="picker" [(ngModel)]="task.dueDate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button color="link" (click)="onNoClick()">Cancel</button>
+  <button mat-raised-button color="primary" [mat-dialog-close]="task" (click)="addTask()" cdkFocusInitial>Add</button>
+</div>

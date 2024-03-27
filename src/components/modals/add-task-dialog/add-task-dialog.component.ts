@@ -54,7 +54,7 @@ export class AddTaskDialogComponent {
   }
 
   getAllUser(): void {
-    this.apiService.getAllUser().subscribe({
+    this.apiService.getAllUser("KBN").subscribe({
       next: (users: User[]) => {
         this.users = users;
         console.log('Users:', users);

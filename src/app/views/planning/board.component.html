@@ -3,7 +3,17 @@
     <c-col *ngFor="let status of statuses" md="4">
       <c-card class="status-card">
         <c-card-body>
-          <h6 class="mb-4">{{ status.status }}</h6>
+          <div class="d-flex justify-content-between align-items-center mb-2">
+            <h4 class="mb-0">{{ status.status }}</h4>
+            <button mat-icon-button [matMenuTriggerFor]="statusMenu" class="btn">
+              <span cInputGroupText>
+                <svg cIcon name="cilOptions"></svg>
+              </span>
+            </button>
+            <mat-menu #statusMenu="matMenu">
+              <button mat-menu-item >Delete</button>
+            </mat-menu>
+          </div>
           <ng-container *ngIf="getTasksByStatus(status).length > 0; else noTasks">
             <c-card
               *ngFor="let task of getTasksByStatus(status)"

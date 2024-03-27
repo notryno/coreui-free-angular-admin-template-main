@@ -16,6 +16,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatSelectModule } from '@angular/material/select';
 import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 
 
 import { NgScrollbarModule } from 'ngx-scrollbar';
@@ -99,6 +100,7 @@ const APP_CONTAINERS = [
     MatSelectModule,
     MatDialogModule,
     MatIconModule,
+    MatMenuModule
   ],
   providers: [
     {

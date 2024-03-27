@@ -1,0 +1,16 @@
+<div class="card">
+    <div class="card-header">
+      Backlog
+    </div>
+    <div class="card-body">
+      <ul class="list-group">
+        <li *ngFor="let task of tasks" class="list-group-item" (click)="handleTaskClick(task)">
+          {{ task.summary }}
+        </li>
+        <li *ngIf="tasks.length === 0" class="list-group-item text-muted">
+          No tasks available.
+        </li>
+      </ul>
+    </div>
+  </div>
+  

@@ -54,8 +54,8 @@ export class ApiService {
     return this.http.get<Status[]>(endpoint, { headers });
   }
 
-  getAllUser(): Observable<User[]> {
-    const endpoint = `${this.apiUrl}/users`;
+  getAllUser(projectKey: string): Observable<User[]> {
+    const endpoint = `${this.apiUrl}/users/${projectKey}`;
 
     // Get the bearer token from sessionStorage
     const authToken = sessionStorage.getItem('Bearer Token');

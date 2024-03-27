@@ -42,7 +42,7 @@ export class TaskDetailsModalComponent {
   }
 
   getAllUser(): void {
-    this.apiService.getAllUser().subscribe({
+    this.apiService.getAllUser("KBN").subscribe({
       next: (users: User[]) => {
         this.users = users;
       },

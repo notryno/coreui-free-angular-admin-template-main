@@ -5,6 +5,7 @@ import { Task } from '../../models/task.model';
 import { Status } from '../../models/status.model';
 import { TaskDetailsModalComponent } from 'src/components/modals/task-details-modal/task-details-modal.component';
 import { AddTaskDialogComponent } from 'src/components/modals/add-task-dialog/add-task-dialog.component';
+import { TaskService } from 'src/app/services/task.service';
 
 @Component({
   selector: 'app-board',
@@ -15,20 +16,26 @@ export class BoardComponent implements OnInit {
   tasks: Task[] = [];
   statuses: Status[] = [];
 
-  constructor(private apiService: ApiService, private dialog: MatDialog) {}
+  constructor(
+    private apiService: ApiService,
+    private dialog: MatDialog,
+    private taskService: TaskService
+    ) {}
 
-  ngOnInit(): void {
-    this.getAllTasks();
-    this.getAllStatus();
-  }
+    ngOnInit(): void {
+      this.taskService.tasks$.subscribe(tasks => {
+        this.tasks = tasks;
+      });
+      this.getAllTasks();
+      this.getAllStatus();
+    }
 
   getAllTasks(): void {
     console.log('Inside board');
     const projectKey = 'KBN';
     this.apiService.getAllTasks(projectKey).subscribe({
       next: (tasks: Task[]) => {
-        this.tasks = tasks;
-        console.log('Tasks:', this.tasks); // Optional: Log tasks to console
+        this.taskService.updateTasks(tasks);
       },
       error: (error) => {
         console.error('Error fetching tasks:', error);
@@ -67,13 +74,18 @@ export class BoardComponent implements OnInit {
       this.dialog.open(TaskDetailsModalComponent, {
         data: {
           taskSummary: task.summary,
-          taskDescription: task.description
+          taskDescription: task.description,
+          taskStatus: task.statusId,
+          taskAssignee: task.assigneeId,
+          taskReporter: task.reporterId,
+          taskDueDate: task.dueDate,
         }
       });
     }
   }
-  
-  handleAddTaskClick(): void {
+
+  addNewTask(newTask: Task): void {
+    this.taskService.addTask(newTask);
   }
 
   openAddTaskDialog(): void {
@@ -82,10 +94,7 @@ export class BoardComponent implements OnInit {
     });
 
     dialogRef.componentInstance.taskAdded.subscribe((newTask: Task) => {
-      if (newTask) {
-        this.tasks.push(newTask); // Add the new task to the tasks array
-        // Optionally, you can also reload all tasks here if needed
-      }
+      this.addNewTask(newTask);
     });
   }
 }

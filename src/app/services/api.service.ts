@@ -3,7 +3,6 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { Task } from '../models/task.model';
 import { Status } from '../models/status.model';
-import { assign } from 'lodash-es';
 import { User } from '../models/user.model';
 
 // <p>Placeholder content for the first card.</p>
@@ -88,6 +87,24 @@ export class ApiService {
     });
 
     console.log(form);
+    return this.http.post<Task>(endpoint, form, { headers });
+  }
+
+  updateTask(task: Task, projectKey: string): Observable<Task> {
+    const endpoint = `${this.apiUrl}/project/${projectKey}/task/${task.id}/update`;
+    const authToken = sessionStorage.getItem('Bearer Token');
+
+    const form = new FormData();
+    form.append('summary', task.summary);
+    form.append('description', task.description);
+    form.append('assigneeId', task.assigneeId?.id.toString() ?? '');
+    form.append('reporterId', task.reporterId?.id.toString() ?? '');
+    form.append('statusId', task.statusId?.id.toString() ?? '');
+    form.append('dueDate', task.dueDate.toISOString());
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${authToken}`
+    });
+
     return this.http.post<Task>(endpoint, form, { headers });
   }
 

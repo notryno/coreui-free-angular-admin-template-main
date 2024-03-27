@@ -1,3 +1,5 @@
+// DefaultHeaderComponent.ts
+
 import { Component, Input } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
@@ -5,9 +7,14 @@ import { MatDialog } from '@angular/material/dialog';
 
 import { ClassToggleService, HeaderComponent } from '@coreui/angular';
 import { AddTaskDialogComponent } from 'src/components/modals/add-task-dialog/add-task-dialog.component';
+import { BoardComponent } from 'src/app/views/planning/board.component';
 
 
 import { AuthService } from 'src/app/services/auth.service';
+import { ApiService } from 'src/app/services/api.service';
+import { Task } from 'src/app/models/task.model';
+import { TaskService } from 'src/app/services/task.service';
+
 
 @Component({
   selector: 'app-default-header',
@@ -16,6 +23,7 @@ import { AuthService } from 'src/app/services/auth.service';
 export class DefaultHeaderComponent extends HeaderComponent {
 
   @Input() sidebarId: string = "sidebar";
+  boardComponent: BoardComponent | null = null;
 
   public newMessages = new Array(4)
   public newTasks = new Array(5)
@@ -24,7 +32,9 @@ export class DefaultHeaderComponent extends HeaderComponent {
   constructor(
     private classToggler: ClassToggleService,
     private authService: AuthService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private apiService: ApiService,
+    private taskService: TaskService
   ) {
     super();
   }
@@ -38,11 +48,13 @@ export class DefaultHeaderComponent extends HeaderComponent {
       width: '500px',
       data: { /* additional data if needed */ }
     });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed', result);
-      // Handle the result (new task) here
+  
+    dialogRef.afterClosed().subscribe((newTask: Task | undefined) => {
+      if (newTask) {
+        this.taskService.addTask(newTask);
+      }
     });
   }
+  
 
 }

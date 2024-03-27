@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MatDialogModule } from '@angular/material/dialog';
 import { AddTaskDialogComponent } from 'src/components/modals/add-task-dialog/add-task-dialog.component';
+import { TaskDetailsModalComponent } from 'src/components/modals/task-details-modal/task-details-modal.component';
 import { FormsModule } from '@angular/forms';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -59,9 +60,8 @@ const APP_CONTAINERS = [
 ];
 
 @NgModule({
-  declarations: [AppComponent, AddTaskDialogComponent,...APP_CONTAINERS],
+  declarations: [AppComponent, AddTaskDialogComponent, TaskDetailsModalComponent, ...APP_CONTAINERS],
   imports: [
-    MatDialogModule,
     MatFormFieldModule,
     BrowserModule,
     BrowserAnimationsModule,
@@ -96,7 +96,7 @@ const APP_CONTAINERS = [
     MatDatepickerModule,
     MatNativeDateModule,
     MatSelectModule,
-
+    MatDialogModule,
   ],
   providers: [
     {

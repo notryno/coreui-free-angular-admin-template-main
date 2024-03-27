@@ -108,4 +108,23 @@ export class ApiService {
     return this.http.post<Task>(endpoint, form, { headers });
   }
 
+  addStatus(statusName: string): Observable<Status> {
+    const endpoint = `${this.apiUrl}/status/add`;
+
+    // Get the bearer token from sessionStorage
+    const authToken = sessionStorage.getItem('Bearer Token');
+    
+    // Set headers with Authorization Bearer token and Content-Type
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${authToken}`
+    });
+
+    // Create the payload for adding a new status
+    const form = new FormData();
+    form.append('status', statusName);
+
+    // Add headers to the HTTP request and send a POST request to the endpoint
+    return this.http.post<Status>(endpoint, form, { headers });
+  }
+
 }

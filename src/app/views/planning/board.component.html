@@ -40,23 +40,23 @@
           </span>
         </c-card-body>
       </c-card>
-      <div *ngIf="showInputField" class="align-items-center" style="width: 200px;">
-        <input type="text" class="form-control mr-3" placeholder="Enter status">
-        <c-card class="clickable card mr-3" >
+      <div *ngIf="showInputField" class="d-flex align-items-center">
+        <input type="text" #inputField class="form-control mr-3" placeholder="Enter status" style="width: 200px;">
+        <c-card class="clickable card mr-3" (click)="addStatus(inputField.value)">
           <c-card-body>
-            <span cInputGroupText>
-              <svg cIcon name="cilCheck"></svg>
+            <span cInputGroupText style="line-height: 0;">
+              <svg cIcon name="cilPlus"></svg>
             </span>
           </c-card-body>
         </c-card>
         <c-card class="clickable card" (click)="showInputField = false">
           <c-card-body>
-            <span cInputGroupText>
+            <span cInputGroupText style="line-height: 0;">
               <svg cIcon name="cilX"></svg>
             </span>
           </c-card-body>
         </c-card>
-      </div>
+      </div>      
     </c-col>
   </c-row>
 </div>

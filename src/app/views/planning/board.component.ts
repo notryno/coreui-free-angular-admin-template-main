@@ -105,4 +105,18 @@ export class BoardComponent implements OnInit {
       this.addNewTask(newTask);
     });
   }
+
+  addStatus(statusName: string): void {
+    this.apiService.addStatus(statusName).subscribe({
+      next: (addedStatus: Status) => {
+        console.log('New status added:', addedStatus);
+        this.getAllStatus();
+        this.showInputField = false;
+      },
+      error: (error) => {
+        console.error('Error adding status:', error);
+        // Handle error if needed
+      },
+    });
+  }
 }

@@ -19,4 +19,37 @@
     border: none;
     box-shadow: none;
 }
+
+.horizontal-scroll {
+  overflow-x: auto;
+  white-space: nowrap;
+}
+
+.status-row {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.status-card {
+  flex-grow: 1;
+  margin-right: 10px;
+}
+
+.add-status-card {
+  width: 50px; /* Set the width to create a square */
+  height: 50px; /* Set the height to match the width */
+  margin-top: 0; /* Remove top margin to align with status cards */
+}
+
+.d-flex.align-items-center input.form-control {
+  margin-right: 10px; /* Increase the margin between the input field and icons */
+}
+
+.d-flex.align-items-center .card {
+  width: 50px; /* Set the width to create a square */
+  height: 50px; /* Set the height to match the width */
+  margin-right: 10px; /* Increase the margin between the icons */
+}
+
+
   

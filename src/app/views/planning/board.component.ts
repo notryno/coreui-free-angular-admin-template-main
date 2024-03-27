@@ -15,6 +15,7 @@ import { TaskService } from 'src/app/services/task.service';
 export class BoardComponent implements OnInit {
   tasks: Task[] = [];
   statuses: Status[] = [];
+  showInputField: boolean = false;
 
   constructor(
     private apiService: ApiService,
@@ -97,7 +98,7 @@ export class BoardComponent implements OnInit {
 
   openAddTaskDialog(): void {
     const dialogRef = this.dialog.open(AddTaskDialogComponent, {
-      width: '400px'
+      width: '500px'
     });
 
     dialogRef.componentInstance.taskAdded.subscribe((newTask: Task) => {

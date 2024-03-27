@@ -1,34 +1,62 @@
-<c-row>
-  <c-col *ngFor="let status of statuses" md="4">
-    <c-card class="status-card">
-      <c-card-body>
-        <h6 class="mb-4">{{ status.status }}</h6>
-        <ng-container *ngIf="getTasksByStatus(status).length > 0; else noTasks">
+<div class="horizontal-scroll">
+  <c-row class="status-row">
+    <c-col *ngFor="let status of statuses" md="4">
+      <c-card class="status-card">
+        <c-card-body>
+          <h6 class="mb-4">{{ status.status }}</h6>
+          <ng-container *ngIf="getTasksByStatus(status).length > 0; else noTasks">
+            <c-card
+              *ngFor="let task of getTasksByStatus(status)"
+              class="clickable mb-2"
+              (click)="handleTaskClick(task)"
+            >
+              <c-card-body>
+                <label>{{ task.summary }}</label>
+              </c-card-body>
+            </c-card>
+          </ng-container>
+          <ng-template #noTasks>
+            <p class="no-tasks">No Tasks</p>
+          </ng-template>
           <c-card
-            *ngFor="let task of getTasksByStatus(status)"
-            class="clickable mb-2"
-            (click)="handleTaskClick(task)"
+            class="add-task-card clickable mb-2 card ng-star-inserted"
+            (click)="openAddTaskDialog()"
           >
-            <c-card-body>
-              <label>{{ task.summary }}</label>
+            <c-card-body class="d-flex align-items-center" style="padding: 4px;">
+              <span cInputGroupText>
+                <svg cIcon name="cilPlus"></svg>
+              </span>
+              <span style="margin-left: 10px">Add Task</span>
             </c-card-body>
           </c-card>
-        </ng-container>
-        <ng-template #noTasks>
-          <p class="no-tasks">No Tasks</p>
-        </ng-template>
-        <c-card
-          class="add-task-card clickable mb-2 card ng-star-inserted"
-          (click)="openAddTaskDialog()"
-        >
-        <c-card-body class="d-flex align-items-center" style="padding: 4px;">
-          <span cInputGroupText>
+        </c-card-body>
+      </c-card>
+    </c-col>
+    <c-col md="6">
+      <c-card *ngIf="!showInputField" class="status-card add-status-card clickable" (click)="showInputField = true">
+        <c-card-body class="d-flex align-items-center justify-content-center" style="padding: 4px;">
+          <span cInputGroupText style="line-height: 0;">
             <svg cIcon name="cilPlus"></svg>
           </span>
-          <span style="margin-left: 10px">Add Task</span>
         </c-card-body>
+      </c-card>
+      <div *ngIf="showInputField" class="align-items-center" style="width: 200px;">
+        <input type="text" class="form-control mr-3" placeholder="Enter status">
+        <c-card class="clickable card mr-3" >
+          <c-card-body>
+            <span cInputGroupText>
+              <svg cIcon name="cilCheck"></svg>
+            </span>
+          </c-card-body>
         </c-card>
-      </c-card-body>
-    </c-card>
-  </c-col>
-</c-row>
+        <c-card class="clickable card" (click)="showInputField = false">
+          <c-card-body>
+            <span cInputGroupText>
+              <svg cIcon name="cilX"></svg>
+            </span>
+          </c-card-body>
+        </c-card>
+      </div>
+    </c-col>
+  </c-row>
+</div>

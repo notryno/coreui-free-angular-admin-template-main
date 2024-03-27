@@ -21,4 +21,16 @@ export class TaskService {
     const updatedTasks = [...currentTasks, newTask];
     this.tasksSubject.next(updatedTasks);
   }
+
+  updateTask(updatedTask: Task): void {
+    const currentTasks = this.tasksSubject.getValue();
+    const updatedTasks = currentTasks.map(task => {
+      if (task.id === updatedTask.id) {
+        return updatedTask;
+      } else {
+        return task;
+      }
+    });
+    this.tasksSubject.next(updatedTasks);
+  }
 }

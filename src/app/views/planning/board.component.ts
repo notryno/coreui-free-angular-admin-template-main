@@ -71,14 +71,21 @@ export class BoardComponent implements OnInit {
 
   handleTaskClick(task: Task): void {
     if (task) {
-      this.dialog.open(TaskDetailsModalComponent, {
+      const dialogRef = this.dialog.open(TaskDetailsModalComponent, {
         data: {
-          taskSummary: task.summary,
-          taskDescription: task.description,
-          taskStatus: task.statusId,
-          taskAssignee: task.assigneeId,
-          taskReporter: task.reporterId,
-          taskDueDate: task.dueDate,
+          id: task.id,
+          summary: task.summary,
+          description: task.description,
+          statusId: task.statusId,
+          assigneeId: task.assigneeId,
+          reporterId: task.reporterId,
+          dueDate: task.dueDate,
+        }
+      });
+
+      dialogRef.afterClosed().subscribe((updatedTask: Task | undefined) => {
+        if (updatedTask) {
+          this.taskService.updateTask(updatedTask);
         }
       });
     }

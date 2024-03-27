@@ -1,73 +1,62 @@
-<div
-  mat-dialog-content
-  class="modal-body form-container"
-  style="width: 1280px; height: 520px"
->
-  <div class="row">
-    <div class="col-md-6">
-      <h2>
-        <mat-form-field>
-          <input matInput type="text" [(ngModel)]="data.summary" />
-        </mat-form-field>
-      </h2>
-      <h5>Description</h5>
-      <mat-form-field>
-        <textarea
-          matInput
-          rows="4"
-          cols="50"
-          [(ngModel)]="data.description"
-        ></textarea>
-      </mat-form-field>
+<div mat-dialog-content class="modal-body container" style="width: 1280px; height: 520px; display: flex;">
+  <!-- Left side div with scrollable content -->
+  <div class="col-md-6" style="overflow-y: auto;">
+    <h2 *ngIf="!isSummaryEditMode" (click)="isSummaryEditMode = true">{{ data.summary }}</h2>
+    <mat-form-field *ngIf="isSummaryEditMode">
+      <input matInput type="text" [(ngModel)]="data.summary" />
+    </mat-form-field>
+    <button mat-icon-button color="primary" *ngIf="isSummaryEditMode" (click)="isSummaryEditMode = false">
+      <mat-icon>close</mat-icon>
+    </button>
+    <h5>Description</h5>
+    <mat-form-field>
+      <textarea matInput rows="4" cols="50" [(ngModel)]="data.description"></textarea>
+    </mat-form-field>
+  </div>
+  <!-- Right side div with table layout -->
+  <div class="col-md-6">
+    <div class="form-group">
+      <label for="status">Status</label>
+      <select class="form-control" id="status" style="width: 150px;" [(ngModel)]="data.statusId.id">
+        <option *ngFor="let status of statuses" [value]="status.id">{{ status.status }}</option>
+      </select>
     </div>
-    <!-- Right-aligned content -->
-    <div class="col-md-6">
-      <h5>Status</h5>
-      <mat-form-field>
-        <mat-label>Status</mat-label>
-        <mat-select [(ngModel)]="data.statusId.id">
-          <mat-option *ngFor="let status of statuses" [value]="status.id">
-            {{ status.status }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-      <mat-label>Details</mat-label>
-      <mat-form-field>
-        <textarea
-          matInput
-          rows="4"
-          cols="50"
-          [(ngModel)]="data.details"
-        ></textarea>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Assignee</mat-label>
-        <mat-select [(ngModel)]="data.assigneeId">
-          <mat-option *ngFor="let user of users" [value]="user"
-            >{{ user.firstName }} {{ user.lastName }}</mat-option
-          >
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Reporter</mat-label>
-        <mat-select [(ngModel)]="data.reporterId">
-          <mat-option *ngFor="let user of users" [value]="user"
-            >{{ user.firstName }} {{ user.lastName }}</mat-option
-          >
-        </mat-select>
-      </mat-form-field>
-      <mat-form-field>
-        <mat-label>Due Date</mat-label>
-        <input
-          matInput
-          placeholder="Due Date"
-          [matDatepicker]="picker"
-          [(ngModel)]="data.dueDate"
-        />
-        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-        <mat-datepicker #picker></mat-datepicker>
-      </mat-form-field>
-    </div>
+    
+    <table class="table" style="margin-top: 16px;">
+      <tr>
+        <th colspan="2">Details</th>
+      </tr>
+      <tr>
+        <td>Assignee:</td>
+        <td>
+          <mat-form-field>
+            <mat-select [(ngModel)]="data.assigneeId.id">
+              <mat-option *ngFor="let user of users" [value]="user.id">{{ user.firstName }} {{ user.lastName }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>Reporter:</td>
+        <td>
+          <mat-form-field>
+            <mat-select [(ngModel)]="data.reporterId.id">
+              <mat-option *ngFor="let user of users" [value]="user.id">{{ user.firstName }} {{ user.lastName }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </td>
+      </tr>
+      <tr>
+        <td>Due Date:</td>
+        <td>
+          <mat-form-field>
+            <input matInput placeholder="Due Date" [matDatepicker]="picker" [(ngModel)]="data.dueDate" />
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+        </td>
+      </tr>
+    </table>
   </div>
 </div>
 <div mat-dialog-actions class="modal-footer">

@@ -26,11 +26,17 @@ export class TaskService {
     const currentTasks = this.tasksSubject.getValue();
     const updatedTasks = currentTasks.map(task => {
       if (task.id === updatedTask.id) {
-        return updatedTask;
-      } else {
-        return task;
+        // Update only the fields that are present in updatedTask
+        task.summary = updatedTask.summary ?? task.summary;
+        task.description = updatedTask.description ?? task.description;
+        task.statusId = updatedTask.statusId ?? task.statusId;
+        task.reporterId = updatedTask.reporterId ?? task.reporterId;
+        task.assigneeId = updatedTask.assigneeId ?? task.assigneeId;
+        task.dueDate = updatedTask.dueDate ?? task.dueDate;
       }
+      return task;
     });
     this.tasksSubject.next(updatedTasks);
   }
+  
 }

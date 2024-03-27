@@ -18,6 +18,7 @@ export class TaskDetailsModalComponent {
 
   statuses: Status[] = [];
   users: User[] = [];
+  isSummaryEditMode: boolean = false;
 
   constructor(
     public dialogRef: MatDialogRef<TaskDetailsModalComponent>,
@@ -25,6 +26,7 @@ export class TaskDetailsModalComponent {
   private apiService: ApiService ) {
     this.getAllStatus();
     this.getAllUser();
+    console.log('data:', data);
   }
 
   getAllStatus(): void {

@@ -79,7 +79,7 @@ export class BoardComponent implements OnInit {
           statusId: task.statusId,
           assigneeId: task.assigneeId,
           reporterId: task.reporterId,
-          dueDate: task.dueDate,
+          dueDate: new Date(task.dueDate),
         }
       });
 

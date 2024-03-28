@@ -12,7 +12,7 @@ import { AuthService } from './services/auth.service';
   template: '<router-outlet></router-outlet>',
 })
 export class AppComponent implements OnInit {
-  title = 'CoreUI Free Angular Admin Template';
+  title = 'Jello';
 
   constructor(
     private router: Router,

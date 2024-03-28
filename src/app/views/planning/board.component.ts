@@ -101,8 +101,13 @@ export class BoardComponent implements OnInit {
       width: '500px'
     });
 
-    dialogRef.componentInstance.taskAdded.subscribe((newTask: Task) => {
-      this.addNewTask(newTask);
+    // dialogRef.componentInstance.taskAdded.subscribe((newTask: Task) => {
+    //   this.addNewTask(newTask);
+    // });
+    dialogRef.afterClosed().subscribe((newTask: Task | undefined) => {
+      if (newTask) {
+        this.addNewTask(newTask);
+      }
     });
   }
 

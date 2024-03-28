@@ -1,7 +1,7 @@
 <div mat-dialog-content class="modal-body container" style="width: 1280px; height: 520px; display: flex;">
   <!-- Left side div with scrollable content -->
   <div class="col-md-6" style="overflow-y: auto;">
-    <h2 *ngIf="!isSummaryEditMode" (click)="isSummaryEditMode = true">{{ data.summary }}</h2>
+    <h2 *ngIf="!isSummaryEditMode" (click)="isSummaryEditMode = true">{{ data.summary }} <svg cIcon name="cilPencil" style="margin-left: 5px;" class="clickable"></svg></h2>
     <mat-form-field *ngIf="isSummaryEditMode">
       <input matInput type="text" [(ngModel)]="data.summary" />
     </mat-form-field>
